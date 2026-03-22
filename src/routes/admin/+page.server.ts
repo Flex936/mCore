@@ -1,11 +1,9 @@
 import type { Actions, PageServerLoad } from './$types';
-import { auth } from '$lib/server/auth';
 import { error, redirect } from '@sveltejs/kit';
-import { db } from '$lib/server/db';
 import { games } from '$lib/server/db/schema';
 
-export const load: PageServerLoad = async ({ request }) => {
-    const sessionData = await auth.api.getSession({
+export const load: PageServerLoad = async ({ request, locals }) => {
+    const sessionData = await locals.auth.api.getSession({
         headers: request.headers,
     });
 
@@ -23,13 +21,13 @@ export const load: PageServerLoad = async ({ request }) => {
 };
 
 export const actions: Actions = {
-    uploadGame: async ({ request }) => {
+    uploadGame: async ({ request, locals }) => {
         const formData = await request.formData();
 
         const name = formData.get('name') as string;
         const size = Number(formData.get('size'));
 
-        await db.insert(games).values({
+        await locals.db.insert(games).values({
             name: name,
             size: size,
             compressedSize: size,
