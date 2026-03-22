@@ -1,12 +1,11 @@
 import type { Actions } from './$types';
-import { auth } from '$lib/server/auth';
 import { fail, redirect } from '@sveltejs/kit';
 
 export const actions: Actions = {
-    default: async (event) => {
+    default: async ({ request, locals }) => {
         try {
-            await auth.api.signOut({
-                headers: event.request.headers,
+            await locals.auth.api.signOut({
+                headers: request.headers,
             });
         } catch (error) {
             return fail(500, { message: 'Unexpected error during logout' });
