@@ -13,8 +13,8 @@ export const games = sqliteTable('games', {
 	size: integer('size').notNull(),
 	compressedSize: integer('compressed_size').notNull(),
 	thumbnail: text('thumbnail'),
-	createdAt: integer('created_at', { mode: 'timestamp' }).notNull().default(new Date()),
-	updatedAt: integer('updated_at', { mode: 'timestamp' }).notNull().default(new Date()),
+	createdAt: integer('created_at', { mode: 'timestamp' }).notNull().$defaultFn(() => new Date()),
+	updatedAt: integer('updated_at', { mode: 'timestamp' }).notNull().$defaultFn(() => new Date()),
 });
 
 export * from './auth.schema';
