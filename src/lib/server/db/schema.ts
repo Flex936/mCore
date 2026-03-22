@@ -10,6 +10,7 @@ export const games = sqliteTable('games', {
 	id: text('id').primaryKey().$defaultFn(() => crypto.randomUUID()),
 	name: text('name').notNull(),
 	path: text('path').notNull(),
+	savePath: text('save_path'),
 	size: integer('size').notNull(),
 	compressedSize: integer('compressed_size').notNull(),
 	thumbnail: text('thumbnail'),
